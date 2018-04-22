@@ -2,6 +2,9 @@ package molgroup;
 
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.group.AtomContainerDiscretePartitionRefiner;
+import org.openscience.cdk.group.PartitionRefinement;
+import org.openscience.cdk.group.PermutationGroup;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -21,6 +24,7 @@ public class App extends Application {
 	
 	private Label nText;	// n, the number of vertices in the mol
 	private Label symNText; // the size of the sym group on n = n!
+	private Label autText;	// the size of the automorphism group
 	private BorderPane root;
 	
 	@Override
@@ -42,11 +46,19 @@ public class App extends Application {
 		Label symNLabel = new Label("|Sym(N)|");
 		symNText = new Label("?");
 		
+		Label autLabel = new Label("|Aut(M)|");
+		autText = new Label("?");
+		
 		GridPane infoPane = new GridPane();
 		infoPane.add(nLabel, 0, 0);
 		infoPane.add(nText, 1, 0);
+		
 		infoPane.add(symNLabel, 0, 1);
 		infoPane.add(symNText, 1, 1);
+		
+		infoPane.add(autLabel, 0, 2);
+		infoPane.add(autText, 1, 2);
+		
 		infoPane.setHgap(10);
 		infoPane.setMinWidth(50);
 		infoPane.setStyle("-fx-padding: 10");
@@ -60,6 +72,10 @@ public class App extends Application {
 			int n = mol.getAtomCount();
 			nText.setText(String.valueOf(n));
 			symNText.setText(String.valueOf(factorial(n)));
+			
+			AtomContainerDiscretePartitionRefiner refiner = PartitionRefinement.forAtoms().create();
+			PermutationGroup autGroup = refiner.getAutomorphismGroup(mol);
+			autText.setText(String.valueOf(autGroup.getSize()));
 			
 			MoleculePane identityMol = new MoleculePane(300, 300);
 			root.setCenter(identityMol.getPane(mol));
