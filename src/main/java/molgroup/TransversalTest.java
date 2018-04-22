@@ -21,7 +21,8 @@ public class TransversalTest {
 //		 String smiles = "C12C3C4C1C5C2C3C45";
 		
 //		String smiles = "C1CCCCC1";	// 6-cycle
-		String smiles = "C1(C2)(C3)C23C1"; // propellane
+//		String smiles = "C1(C2)(C3)C23C1"; // propellane
+		String smiles = "C1OCOCO1";
 
 		SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IAtomContainer m = sp.parseSmiles(smiles);
@@ -33,7 +34,7 @@ public class TransversalTest {
 
 		PermutationGroup symN = PermutationGroup.makeSymN(m.getAtomCount());
 
-//		print("autM T in symN", m, symN.transversal(autM));
+		print("autM T in symN", m, symN.transversal(autM));
 		
 		// specific to C6
 //		PermutationGroup fNorm = new PermutationGroup(6);
@@ -42,10 +43,10 @@ public class TransversalTest {
 //		print("fnorm all", m, fNorm.all());
 		
 		// specific to propellane
-		PermutationGroup rot = new PermutationGroup(5);
-		rot.enter(new Permutation(0, 2, 4, 3, 1));	// r
-		rot.enter(new Permutation(3, 4, 2, 0, 1));	// f
-		print("rot", m, rot.all());
+//		PermutationGroup rot = new PermutationGroup(5);
+//		rot.enter(new Permutation(0, 2, 4, 3, 1));	// r
+//		rot.enter(new Permutation(3, 4, 2, 0, 1));	// f
+//		print("rot", m, rot.all());
 
 //		print("fnorm in autM", m, autM.transversal(fNorm));
 		

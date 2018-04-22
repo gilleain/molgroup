@@ -11,6 +11,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
@@ -39,13 +40,17 @@ public class MoleculeGrid {
 		for (IAtomContainer ac : mols) {
 			Depiction d = dg.withSize(cellW, cellH)
 							.withFillToFit()
+							.withMargin(5)
 							.withAtomNumbers()
 							.depict(ac);
 			
 			BufferedImage bufferedImage = d.toImg();
 			Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+			BorderPane pane = new BorderPane();
 			ImageView view = new ImageView(image);
-			gr.add(view, col, row);
+			pane.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 2px");
+			pane.setCenter(view);
+			gr.add(pane, col, row);
 			counter++;
 			if (counter % dim == 0) {
 				row++;
