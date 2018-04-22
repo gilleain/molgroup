@@ -75,10 +75,15 @@ public class App extends Application {
 			
 			AtomContainerDiscretePartitionRefiner refiner = PartitionRefinement.forAtoms().create();
 			PermutationGroup autGroup = refiner.getAutomorphismGroup(mol);
-			autText.setText(String.valueOf(autGroup.getSize()));
+			int autSize = (int)autGroup.order();
+			autText.setText(String.valueOf(autSize));
 			
-			MoleculePane identityMol = new MoleculePane(300, 300);
-			root.setCenter(identityMol.getPane(mol));
+//			MoleculePane identityMol = new MoleculePane(300, 300);
+//			root.setCenter(identityMol.getPane(mol));
+			int dim = (int) Math.floor(Math.sqrt(autSize));
+			MoleculeGrid autGrid = new MoleculeGrid(1200, 600, dim);
+			MoleculeGroup autMolGroup = new MoleculeGroup(mol, autGroup);
+			root.setCenter(autGrid.render(autMolGroup.getMolecules()));
 		} catch (InvalidSmilesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

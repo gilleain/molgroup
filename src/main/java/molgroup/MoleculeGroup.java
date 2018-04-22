@@ -42,9 +42,12 @@ public class MoleculeGroup {
 	
 	private void apply(List<IAtomContainer> mols, List<Permutation> permutations) {
 		AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(identityMol);
+		int counter = 0;
 		for (Permutation p : permutations) {
 			IAtomContainer pmol = permutor.containerFromPermutation(p.getValues());
+			pmol.setID(String.valueOf(counter));
 			mols.add(pmol);
+			counter++;
 		}
 	}
 

@@ -7,6 +7,7 @@ import org.openscience.cdk.depict.Depiction;
 import org.openscience.cdk.depict.DepictionGenerator;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.smsd.labelling.AtomContainerPrinter;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
@@ -37,6 +38,7 @@ public class MoleculeGrid {
 		int col = 0;
 		int cellW = w / dim;
 		int cellH = h / dim;
+		AtomContainerPrinter printer = new AtomContainerPrinter();
 		for (IAtomContainer ac : mols) {
 			Depiction d = dg.withSize(cellW, cellH)
 							.withFillToFit()
@@ -50,6 +52,7 @@ public class MoleculeGrid {
 			ImageView view = new ImageView(image);
 			pane.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 2px");
 			pane.setCenter(view);
+			System.out.println("At " + col + "," + row + " Adding " + ac.getID());
 			gr.add(pane, col, row);
 			counter++;
 			if (counter % dim == 0) {
